@@ -1,9 +1,9 @@
 <div class="row">
-  <h1 class="title-h1 hidden-xs">{{ title || 'Lights' }}</h1>
+  <h1 class="title-h1 hidden-xs">{{ title || '全部产品' }}</h1>
   <aside id="sidebar" class="col-md-3">
 
     <div class="search hidden-xs">
-      <input type="search" results="0" placeholder="Search" ng-model="search.n" ng-focus="light=null;search={}">
+      <input type="search" results="0" placeholder="搜索" ng-model="search.n" ng-focus="light=null;search={}">
     </div>
 
     <div class="list-group visible-xs-block">
@@ -12,7 +12,10 @@
         <span class="glyphicon glyphicon-align-justify pull-right"></span>
       </a>
       <div collapse="!xx">
-        
+        <a class="list-group-item" ng-click="setCategory('')">
+          全部产品
+          <span class="badge">{{ lights.length }}</span>
+        </a>
         <a class="list-group-item" ng-repeat="val in categorys" ng-click="setCategory(val.k)" ng-class="{active: search.c == val.k}">
           {{ val.v }}
           <span class="badge">{{ nums[val.k] }}</span>
@@ -22,6 +25,10 @@
 
     <div class="hidden-xs">
       <div class="list-group" >
+        <a class="list-group-item als" ng-click="setCategory('')">
+          全部产品
+          <span class="badge">{{ lights.length }}</span>
+        </a>
         <a class="list-group-item" ng-repeat="val in categorys" ng-click="setCategory(val.k)" ng-class="{active: search.c == val.k}">
           {{ val.v }}
           <span class="badge">{{ nums[val.k] }}</span>
@@ -44,24 +51,26 @@
       <div class="widget">
         <h3 class="title">Contact US</h3>
         <ul class="entry">
-          <li>Daisy Group Co., Ltd</li>
-          <li>Contact：Mary</li>
-          <li>Tel : (+86) 020 8641 4989</li>
-          <li>Fax: (+86) 020 6116 2251</li>
-          <li>QQ: 2274937859</li>
-          <li>
-            E-mail: <a href="mailto:daisylight@vip.163.com">daisylight@vip.163.com</a>
-          </li>
+          <li>联系人：Mary</li>
           <li>
             Skype: <a href="skype:ampus05?chat">Ampus05</a> 
           </li>
+          <li>Q Q：2274937859</li>
+          <li>电话：(+86) 020 8641 4989</li>
+          <li>传真：(+86) 020 6116 2251</li>
           <li>
-            Address: Bldg.A2~A3,No.11 Industrial Area,Yagang,Baiyun District,Guangzhou,China
+            邮箱地址：<a href="mailto:daisylight@vip.163.com">daisylight@vip.163.com</a>
+          </li>
+          <li>
+            地址：广州市白云区鸦岗十一社工业区A2~A3栋
           </li>
         </ul>
       </div>
     </div>
   </aside>
+
+
+
 
 
 
@@ -74,7 +83,7 @@
           <img ng-src="http://daisy.qiniudn.com/{{ light.is[0] }}-400x300" alt="{{ light.n }}">
         </a>
         <div class="name">{{ light.n }}</div>
-        <div class="desc" title="{{ light.de }}">{{ light.de }}</div>
+        <div class="desc" title="{{ light.dz }}">{{ light.dz }}</div>
 
       </div>
     </div>
@@ -97,17 +106,17 @@
       <h3 class="title-sub">
         技术参数
       </h3>
-      <div class="details" bind-html-unsafe="light.be"></div>
+      <div class="details" bind-html-unsafe="light.bz"></div>
       <h3 class="title-sub">
         Message
         <small>Leave a message to US.</small>
       </h3>
       <form>
-        <input ng-model='message.name' placeholder="Name">
-        <input ng-model='message.email' placeholder="Email">
-        <input ng-model='message.country' placeholder="Country City">
-        <textarea placeholder="Message" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
-        <button type="button" class="btn btn-default" ng-click="send(message)">Submit Message</button>
+        <input ng-model='message.name' placeholder="昵称">
+        <input ng-model='message.email' placeholder="邮箱">
+        <input ng-model='message.country' placeholder="城市">
+        <textarea placeholder="留言信息" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
+        <button type="button" class="btn btn-default" ng-click="send(message)">提交信息</button>
         <div style="text-align: center;">
         </div>
       </form>
