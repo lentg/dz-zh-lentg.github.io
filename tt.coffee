@@ -78,11 +78,52 @@
 # console.log  food for food in foods when food is 'chocolate'
 
 
-categorys = [
-  {k: 'par', v: 'LED PAR'}
-  {k: 'city', v: 'City Color'}
-  {k: 'moving', v: 'Moving Heads'}
-  {k: 'washer', v: 'LED Wall Washer'}
-  {k: 'other', v: 'Other'}
-]
-console.log category.v for category in categorys when category.k is 'par'
+# categorys = [
+#   {k: 'par', v: 'LED PAR'}
+#   {k: 'city', v: 'City Color'}
+#   {k: 'moving', v: 'Moving Heads'}
+#   {k: 'washer', v: 'LED Wall Washer'}
+#   {k: 'other', v: 'Other'}
+# ]
+# console.log category.v for category in categorys when category.k is 'par'
+
+
+a = [1,2,3,6,9,8,7,11,25,13,59,60,66,33,88,99,55]
+# random = (min, max) ->
+#   if !max
+#     max = min
+#     min = 0
+#   min + Math.floor(Math.random() * (max - min + 1))
+  
+# shuffle = (items, n) ->
+#   index = -1
+#   length = items.length
+#   result = Array(length)
+
+#   for i in [0...length]
+#     rand = random 0, i
+#     result[i] = result[rand] if i != rand
+#     result[rand] = items[i]
+#   if n
+#     result.slice 0, n
+#   else
+#     result
+
+# console.time '100-elements'
+# # for i in [0...5]
+# console.log (shuffle a).slice 0, 3
+# console.timeEnd('100-elements');
+
+
+
+# console.time('200-elements');
+# # for i in [0...5]
+# console.log (a.sort -> 0.5 - Math.random()).slice 0, 3
+# console.timeEnd('200-elements');
+
+
+# console.log a.sort -> 0.5 - Math.random()
+console.log new Date().getFullYear()
+d = new Date()
+console.log new Date().toDateString()
+console.log "#{d.getFullYear()}-#{d.getMonth()}-#{d.getDate()}"

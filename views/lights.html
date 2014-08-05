@@ -13,7 +13,7 @@
       </a>
       <div collapse="!xx">
         <a class="list-group-item" ng-click="setCategory('')">
-          全部产品
+          Lights
           <span class="badge">{{ lights.length }}</span>
         </a>
         <a class="list-group-item" ng-repeat="val in categorys" ng-click="setCategory(val.k)" ng-class="{active: search.c == val.k}">
@@ -26,7 +26,7 @@
     <div class="hidden-xs">
       <div class="list-group" >
         <a class="list-group-item als" ng-click="setCategory('')">
-          全部产品
+          Lights
           <span class="badge">{{ lights.length }}</span>
         </a>
         <a class="list-group-item" ng-repeat="val in categorys" ng-click="setCategory(val.k)" ng-class="{active: search.c == val.k}">
@@ -48,24 +48,18 @@
       </div>
 
 
-      <div class="widget">
-        <h3 class="title">Contact US</h3>
-        <ul class="entry">
-          <li>联系人：Mary</li>
-          <li>
-            Skype: <a href="skype:ampus05?chat">Ampus05</a> 
-          </li>
-          <li>Q Q：2274937859</li>
-          <li>电话：(+86) 020 8641 4989</li>
-          <li>传真：(+86) 020 6116 2251</li>
-          <li>
-            邮箱地址：<a href="mailto:daisylight@vip.163.com">daisylight@vip.163.com</a>
-          </li>
-          <li>
-            地址：广州市白云区鸦岗十一社工业区A2~A3栋
-          </li>
-        </ul>
+      <div class="widget related" ng-if="light">
+        <h3 class="title">Related</h3>
+        <div class="row">
+          <div class="col-xs-12" ng-repeat="related in relateds">
+            <a class="thumbnail" ng-click="show(related)">
+              <img ng-src="http://daisy.qiniudn.com/{{ related.is[0] }}-400x300" alt="{{ related.n }}">
+            </a>
+            <div class="name">{{ related.n }}</div>
+          </div>
+        </div>
       </div>
+
     </div>
   </aside>
 
@@ -79,7 +73,7 @@
     <!-- lists lights -->
     <div class="row lists" ng-if="!light">
       <div class="col-xs-6 col-md-4" ng-repeat="light in lights | filter: search | orderBy : 's': true ">
-        <a class="thumbnail" ng-click="show(light)">
+        <a class="thumbnail" ng-click="show(light, $index)">
           <img ng-src="http://daisy.qiniudn.com/{{ light.is[0] }}-400x300" alt="{{ light.n }}">
         </a>
         <div class="name">{{ light.n }}</div>
@@ -91,7 +85,7 @@
     <!-- show light -->
     <div class="light" ng-if="light">
 
-      <carousel interval="2500">
+      <carousel interval="">
         <slide ng-repeat="img in light.is">
           <a href="http://daisy.qiniudn.com/{{ img }}-1200x900" target="_blank">
             <img ng-src="http://daisy.qiniudn.com/{{ img }}-400x300" alt="{{ light.n }}" style="margin:auto;">
@@ -104,19 +98,30 @@
         </span>
       </div>
       <h3 class="title-sub">
-        技术参数
+        Technical Parameters
       </h3>
-      <div class="details" bind-html-unsafe="light.bz"></div>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-8">
+          <div class="details" bind-html-unsafe="light.bz"></div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <a ng-if="light.v" class="play" href="http://daisy-video.qiniudn.com/{{ light.n }}.mp4" target="_blank">
+            <span class="glyphicon glyphicon-play"></span>
+          </a>
+        </div>
+      </div>
+      
       <h3 class="title-sub">
         Message
         <small>Leave a message to US.</small>
       </h3>
       <form>
-        <input ng-model='message.name' placeholder="昵称">
-        <input ng-model='message.email' placeholder="邮箱">
-        <input ng-model='message.country' placeholder="城市">
-        <textarea placeholder="留言信息" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
-        <button type="button" class="btn btn-default" ng-click="send(message)">提交信息</button>
+        <input ng-model='message.name' placeholder="Name">
+        <input ng-model='message.email' placeholder="Email">
+        <input ng-model='message.country' placeholder="Country City">
+        <textarea placeholder="Message" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
+        <button type="button" class="btn btn-default" ng-click="addMessage(message)">Submit Message</button>
         <div style="text-align: center;">
         </div>
       </form>

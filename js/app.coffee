@@ -1,7 +1,7 @@
 'use strict'
 $ = (id) ->
   document.getElementById id
-tags = ['1W', '3W', '5W', '8W', '10W', '12W', '15W', '25W', 'PAR46', 'PAR64', 'PAR575', 'Flat PAR', 'INDOOR', 'OUTDOOR', 'FULL COLOR', 'SINGLE COLOR', 'Other']
+
 app = angular.module('daisy', ['ngRoute', 'ui.bootstrap'])
 app.config ($routeProvider) ->
     $routeProvider
@@ -23,11 +23,31 @@ app.config ($routeProvider) ->
       .otherwise
         redirectTo: '/'
 
-app.directive 'ngClear', ($window) ->
+app.directive 'ngClear', ($window, $routeParams, $http, Data) ->
   link: (scope, elm) ->
     elm.bind 'click', ->
       store.clear()
-      $window.location.href = '/'
+      $http.get('/js/lights.json').success (rs) ->
+        # obj = {}
+        nums = {}
+
+        nums[tag] = 0 for tag in Data.tags
+        nums[cat.k] = 0 for cat in Data.categorys
+        
+        angular.forEach rs, (val) ->
+          nums[val.c] += 1
+          for t in val.ts
+            nums[t] += 1
+          
+        Data.lights = rs
+        Data.nums = nums
+        store.set 'data', [rs, nums]
+
+        scope.$$childHead.lights = rs if scope.$$childHead.lights
+        if name = $routeParams.name
+            angular.forEach rs, (light) ->
+              scope.$$childHead.light = light if light.n is name
+
 
 app.directive 'demo', (Data) ->
   link: (scope, elm) ->
@@ -52,14 +72,18 @@ app.directive 'x', ($location) ->
 app.factory 'Data', ($http) ->
   obj = {}
   obj.tags = ['1W', '3W', '8W', '10W', '12W', '15W', '25W', 'Other', 'PAR46', 'PAR64', 'PAR575', 'Flat PAR', 'INDOOR', 'OUTDOOR', 'FULL COLOR', 'SINGLE COLOR']
-  obj.marks = s3: 'RGB', s4: 'RGBA/W', s5: 'RGBAW', m2: 'WW 2-IN-1', m3: '3-IN-1', m4: '4-IN-1', m5: '5-IN-1', m6: '6-IN-1', ip20: 'IP20', ip65: 'IP65', ip67: 'IP67', sd: 'Sound Activation', wl: 'Wireless', dmx: 'DMX 512', auto: 'Auto Programs', flick: 'Flicker Free', charge: 'Rechargeable', live: 'LIVE', cast: 'Flight Cast', disco: 'Disco'
+  obj.marks = s3: 'RGB', s4: 'RGBA/W', s5: 'RGBAW', m2: 'WW 二合一', m3: '三合一', m4: '四合一', m5: '五合一', m6: '六合一', ip20: '防护等级 20', ip65: '防护等级 65', ip67: 'IP67', sd: '声音控制', wl: '无线控制', dmx: 'DMX 512', auto: '程序自走', flick: '无闪烁', charge: '可反复充电', live: 'LIVE', cast: '航空箱包装', disco: 'Disco'
   obj.categorys = [
     {k: 'par', v: 'LED 帕灯'}
+    {k: 'moving', v: 'LED 摇头灯'}
+    {k: 'washer', v: 'LED 洗墙灯'}
     {k: 'city', v: '城市之光'}
-    {k: 'moving', v: '摇头灯'}
-    {k: 'washer', v: '洗墙灯'}
     {k: 'other', v: '其他'}
   ]
+
+  obj.addMessage = (message) ->
+    $http.post('https://daisylight.firebaseio.com/messages.json', JSON.stringify(message))
+    # new Firebase('https://flickering-fire-6969.firebaseio.com/').push message
 
   if !store.get 'data'
     $http.get('/js/lights.json').success (rs) ->
@@ -84,7 +108,7 @@ app.factory 'Data', ($http) ->
 
 
 app.controller 'HomeCtrl', ($scope, $location, Data) ->
-  $scope.tops = ['LF109', 'ML-ZQ1519', 'PS1212', 'AWS1209', 'ML140-BEAM', 'PF1012']
+  $scope.tops = ['CT80', 'PS1212', 'LF2512', 'AWS1209', 'ML140-BEAM', 'PF1012']
   $scope.says = [
     {who: 'Mr. Klaus', hi:'One of Germany customer, said: We import products from your company for more than 6 years already because you never disappoint us on quality and delivery time.'}
     {who: 'Mr. Stephen', hi: 'One of USA customer, said: I buy goods from China many years but I never meet any company like your company efficient. Every email I sent will be detailed reply by you within 10 minutes. Always I can get information from you in time.'}    
@@ -94,9 +118,9 @@ app.controller 'HomeCtrl', ($scope, $location, Data) ->
   ]
   $scope.$on '$routeChangeStart', (next, current) ->
     page = $location.path()
-    console.log page
     if page.indexOf('/lights') > -1
       $('lights').classList.add('active') 
+      # document.getElementById('lights').classList.add('active')
 
 app.controller 'LightsCtrl', ($scope, $routeParams, $anchorScroll, Data) ->
   $scope.lights = Data.lights
@@ -104,6 +128,14 @@ app.controller 'LightsCtrl', ($scope, $routeParams, $anchorScroll, Data) ->
   $scope.categorys = Data.categorys
   $scope.tags = Data.tags 
   $scope.nums = Data.nums
+
+  $scope.addMessage = (message) ->
+    message.time = new Date().toDateString()# "#{d.getFullYear()}-#{d.getMonth()}-#{d.getDate()}"
+    Data.addMessage(message).success (res) ->
+      $anchorScroll()
+      $scope.message.content = ''
+  
+  
 
   $scope.setCategory = (category) ->
     $scope.xx = false
@@ -124,15 +156,20 @@ app.controller 'LightsCtrl', ($scope, $routeParams, $anchorScroll, Data) ->
     $scope.search = ts: tag
     $scope.title = "Tags: #{tag}"
   
-  $scope.show = (light) ->
+  $scope.show = (light, index) ->
     $anchorScroll()
+    $scope.message = {}
     $scope.search = c: light?.c, ts: light?.ts
     $scope.light = light
     $scope.title = light?.n
-  
-  $scope.send = (message) ->
-    console.log message
-    $scope.message = ''
+    # $scope.relateds = shuffle $scope.lights, 4
+    $scope.relateds = (angular.copy($scope.lights).sort -> 0.5 - Math.random()).slice 0, 4
+
+
+    $scope.send = (message) ->
+      console.log message
+      $scope.message.content = ''
+
   if name = $routeParams.name
     angular.forEach $scope.lights, (val) -> $scope.show(val) if val.n is name
         
@@ -154,4 +191,3 @@ app.controller 'AboutCtrl', ($scope, Data) ->
     {img: 11, desc: 'Lighting show'}
   ]
 
-   

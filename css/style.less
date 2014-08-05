@@ -1,5 +1,8 @@
 body {
-  background-color: rgb(253, 253, 253);
+  background-color: url(../img/bg.png);
+}
+video{
+  background-color: #161616;
 }
 .title-h1, .title-sub{
   text-transform: uppercase;
@@ -85,7 +88,7 @@ body {
 
 // show light
 .details {
-  margin: 2em auto;
+  // margin: 2em auto;
   // padding-left: 2em;
   // ul{padding-left: 0;}
   li{
@@ -95,6 +98,25 @@ body {
       content: "› ";
       padding-right: 3px;
     }
+  }
+}
+.play {
+  display: block;
+  margin-top: 10em;
+  padding: 2em 0;
+  border: 1px solid #EEE;
+  text-align: center;
+  background-color: #F8F8F8;
+  border-radius: 5px;
+  color: #333;
+  &:hover{
+    text-decoration: none;
+    background-color: #333;
+    border-color: #000;
+    color: #FFF;
+  }
+  span{
+    font-size: 5em;
   }
 }
 
@@ -123,6 +145,15 @@ body {
   textarea {
     height: 96px;
   }
+
+  .tag{
+    margin-left: 2em;
+    a{
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+    }
+  }
 }
 
 .carousel-indicators {
@@ -142,6 +173,19 @@ body {
 
 
 // home
+.intr {
+  p {line-height: 24px; font-size: 0.9em;}
+  .play{
+    margin-top: 0;
+    padding: 1em 0;
+    div{
+      margin-bottom: -0.4em;
+    }
+    span{
+      font-size: 3em;
+    }
+  }
+}
 .ds-header{
   margin: 5em auto;
 }
@@ -175,7 +219,7 @@ body {
 .marks{
   background-color: #F8F8F8;
   text-align: center;
-  margin: 1em auto;
+  margin: 2.8em auto;
   padding-top: 7px;
 }
 .s3, .s4, .s5,
@@ -301,7 +345,17 @@ body {
 #sidebar .tags small:after {
   content: ')';
 }
-
+.related {
+  padding-bottom: 1.2em;
+  a.thumbnail {
+    margin: 8% 10%;
+    cursor: pointer;
+  }
+  .name {
+    text-align: center;
+    margin-top: -0.5em;
+  }
+}
 
 #footer .container {
   text-align: center;
@@ -349,6 +403,7 @@ body {
   }
   .details {
     // padding-left: 0;
+    font-size: 0.85em;
     ul{padding-left: 0;}
   }
   .list-group-item.an-categorys {
@@ -362,6 +417,10 @@ body {
   }
   .title-sub {
     font-size: 1.3em;
+    small{
+      // font-size: 0.25em;
+      text-transform: lowercase;
+    }
   }
   .light{
     .carousel{
@@ -371,6 +430,9 @@ body {
       min-height: 225px;
       background-color: #FFF;
     }
+  }
+  .play {
+    margin-top: 2em;
   }
 }
 
