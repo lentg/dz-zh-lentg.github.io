@@ -13,7 +13,7 @@
       </a>
       <div collapse="!xx">
         <a class="list-group-item" ng-click="setCategory('')">
-          Lights
+          全部产品
           <span class="badge">{{ lights.length }}</span>
         </a>
         <a class="list-group-item" ng-repeat="val in categorys" ng-click="setCategory(val.k)" ng-class="{active: search.c == val.k}">
@@ -26,7 +26,7 @@
     <div class="hidden-xs">
       <div class="list-group" >
         <a class="list-group-item als" ng-click="setCategory('')">
-          Lights
+          全部产品
           <span class="badge">{{ lights.length }}</span>
         </a>
         <a class="list-group-item" ng-repeat="val in categorys" ng-click="setCategory(val.k)" ng-class="{active: search.c == val.k}">
@@ -98,7 +98,7 @@
         </span>
       </div>
       <h3 class="title-sub">
-        Technical Parameters
+        技术参数
       </h3>
 
       <div class="row">
@@ -113,15 +113,14 @@
       </div>
       
       <h3 class="title-sub">
-        Message
-        <small>Leave a message to US.</small>
+        留言
       </h3>
       <form>
-        <input ng-model='message.name' placeholder="Name">
-        <input ng-model='message.email' placeholder="Email">
-        <input ng-model='message.country' placeholder="Country City">
-        <textarea placeholder="Message" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
-        <button type="button" class="btn btn-default" ng-click="addMessage(message)">Submit Message</button>
+        <input ng-model='message.name' placeholder="昵称">
+        <input ng-model='message.email' placeholder="邮箱地址">
+        <input ng-model='message.country' placeholder="国家城市">
+        <textarea placeholder="留言内容" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
+        <button type="button" class="btn btn-default" ng-click="addMessage(message)">提交信息</button>
         <div style="text-align: center;">
         </div>
       </form>
