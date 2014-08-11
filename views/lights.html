@@ -115,12 +115,12 @@
       <h3 class="title-sub">
         留言
       </h3>
-      <form>
-        <input ng-model='message.name' placeholder="昵称">
-        <input ng-model='message.email' placeholder="邮箱地址">
+      <form ng-submit="addMessage(message)">
+        <input ng-model='message.name' placeholder="昵称" required>
+        <input type="email" ng-model='message.email' placeholder="邮箱地址" required>
         <input ng-model='message.country' placeholder="国家城市">
-        <textarea placeholder="留言内容" ng-model="message.content" class="ng-pristine ng-valid"></textarea>
-        <button type="button" class="btn btn-default" ng-click="addMessage(message)">提交信息</button>
+        <textarea placeholder="留言内容" ng-model="message.content" class="ng-pristine ng-valid" required></textarea>
+        <button type="button" class="btn btn-default">提交信息</button>
         <div style="text-align: center;">
         </div>
       </form>
