@@ -18,7 +18,8 @@ app.run(function($location, $rootScope, $window) {
   };
 });
 
-app.config(function($routeProvider) {
+app.config(function($routeProvider, $locationProvider) {
+  $locationProvider.html5Mode(true).hashPrefix('!');
   return $routeProvider.when('/', {
     templateUrl: '/views/home.html',
     controller: 'HomeCtrl'

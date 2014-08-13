@@ -9,25 +9,26 @@ app.run ($location, $rootScope, $window) ->
       delete $window.sessionStorage.data
       $window.location.replace '/'
   }
-app.config ($routeProvider) ->
-    $routeProvider
-      .when '/',
-        templateUrl: '/views/home.html'
-        controller: 'HomeCtrl'
-      .when '/lights',
-        templateUrl: '/views/lights.html'
-        controller: 'LightsCtrl'
-      .when '/lights/:name',
-        templateUrl: '/views/lights.html'
-        controller: 'LightsCtrl'
-      .when '/news',
-        templateUrl: '/views/news.html'
-        controller: 'NewsCtrl'
-      .when '/about',
-        templateUrl: '/views/about.html'
-        controller: 'AboutCtrl'
-      .otherwise
-        redirectTo: '/'
+app.config ($routeProvider, $locationProvider) ->
+  $locationProvider.html5Mode(true).hashPrefix('!');
+  $routeProvider
+    .when '/',
+      templateUrl: '/views/home.html'
+      controller: 'HomeCtrl'
+    .when '/lights',
+      templateUrl: '/views/lights.html'
+      controller: 'LightsCtrl'
+    .when '/lights/:name',
+      templateUrl: '/views/lights.html'
+      controller: 'LightsCtrl'
+    .when '/news',
+      templateUrl: '/views/news.html'
+      controller: 'NewsCtrl'
+    .when '/about',
+      templateUrl: '/views/about.html'
+      controller: 'AboutCtrl'
+    .otherwise
+      redirectTo: '/'
 
 # app.directive 'ngClear', ($window, $routeParams, $http, Data) ->
 #   link: (scope, elm) ->
