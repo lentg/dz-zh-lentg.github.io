@@ -3,12 +3,15 @@ $ = (id) ->
   document.getElementById id
 
 app = angular.module('daisy', ['ngRoute', 'ui.bootstrap'])
-app.run ($location, $rootScope, $window) ->
-  common = $rootScope.common = $rootScope.common || {
-    clear: ->
-      delete $window.sessionStorage.data
-      $window.location.replace '/'
-  }
+app.run ($location) ->
+  page = $ $location.path().split('/')[1]
+  $page?.classList.add 'active'
+# app.run ($location, $rootScope, $window) ->
+#   common = $rootScope.common = $rootScope.common || {
+#     clear: ->
+#       delete $window.sessionStorage.data
+#       $window.location.replace '/'
+#   }
 app.config ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode(true).hashPrefix('!');
   $routeProvider
@@ -82,7 +85,7 @@ app.directive 'xx', ($location) ->
       scope.x = false
   
 
-app.factory 'Data', ($http) ->
+app.factory 'Data', ($http, $window) ->
   obj = {}
   obj.tags = ['1W', '3W', '8W', '10W', '12W', '15W', '25W', 'Other', 'PAR46', 'PAR64', 'PAR575', 'Flat PAR', 'INDOOR', 'OUTDOOR', 'FULL COLOR', 'SINGLE COLOR']
   obj.marks = s3: 'RGB', s4: 'RGBA/W', s5: 'RGBAW', m2: 'WW 二合一', m3: '三合一', m4: '四合一', m5: '五合一', m6: '六合一', ip20: '防护等级 20', ip65: '防护等级 65', ip67: 'IP67', sd: '声音控制', wl: '无线控制', dmx: 'DMX 512', auto: '程序自走', flick: '无闪烁', charge: '可反复充电', live: 'LIVE', cast: '航空箱包装', disco: 'Disco'
@@ -98,8 +101,28 @@ app.factory 'Data', ($http) ->
     $http.post('https://daisylight.firebaseio.com/messages.json', JSON.stringify(message))
     # new Firebase('https://flickering-fire-6969.firebaseio.com/').push message
 
-  if !store.get 'data'
+  # if !store.get 'data'
+  #   $http.get('/js/lights.json').success (rs) ->
+  #     nums = {}
+  #     nums[tag] = 0 for tag in obj.tags
+  #     nums[cat.k] = 0 for cat in obj.categorys
+      
+  #     angular.forEach rs, (val) ->
+  #       nums[val.c] += 1
+  #       for t in val.ts
+  #         nums[t] += 1
+        
+  #     obj.lights = rs
+  #     obj.nums = nums
+  #     store.set 'data', [rs, nums]
+  # else
+  #   data = store.get 'data'
+  #   obj.lights = data[0]
+  #   obj.nums = data[1]
+  # obj
+  if !$window.sessionStorage.data
     $http.get('/js/lights.json').success (rs) ->
+      console.log '...........'
       nums = {}
       nums[tag] = 0 for tag in obj.tags
       nums[cat.k] = 0 for cat in obj.categorys
@@ -111,9 +134,11 @@ app.factory 'Data', ($http) ->
         
       obj.lights = rs
       obj.nums = nums
-      store.set 'data', [rs, nums]
+      $window.sessionStorage.data = JSON.stringify [rs, nums]
+      # store.set 'data', [rs, nums]
   else
-    data = store.get 'data'
+    data = JSON.parse $window.sessionStorage.data || '[]'
+    # data = store.get 'data'
     obj.lights = data[0]
     obj.nums = data[1]
   obj
