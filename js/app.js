@@ -129,7 +129,7 @@ app.factory('Data', function($http, $window) {
     return $http.post('https://daisylight.firebaseio.com/messages.json', JSON.stringify(message));
   };
   if (!$window.sessionStorage.data) {
-    $http.get('/js/lights.json').success(function(rs) {
+    $http.get('/js/zh.json').success(function(rs) {
       var cat, nums, tag, _i, _j, _len, _len1, _ref, _ref1;
       console.log('...........');
       nums = {};
