@@ -1,1 +1,67 @@
-132asdfas
+.video_div{
+	text-align: center;
+	width:100%;
+}
+.video_vi{
+	width:50%;
+}
+.data_title{
+	background-color: #E6E6E6;
+	text-align: right;
+	height: 30px;
+	font-size: 18px;
+	padding-top: 5px;
+	font-family: "微软雅黑";
+	margin-top: 30px;
+	padding-right: 30px;
+	font-weight: bold;
+}
+.table_{
+	border: 1px solid #e6e6e6;
+	color: #666666;
+	font-size: 15px;
+	width: 100%;
+	}
+.table_caption{
+	font-size: 16px;
+	font-family: "微软雅黑";
+	color: #333333;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #F4F4F4;
+	text-align: left;
+	border-right: 1px solid #e6e6e6;
+	border-left: 1px solid #e6e6e6;
+	font-weight: bold;
+	padding-left: 15px;
+}
+.table_td1{
+	width: 20%;
+	padding-right: 2%;
+	background-color: #FAFAFA;
+	border-right: 1px solid #e6e6e6;
+	text-align: right;
+	font-weight: bold;
+}
+.table_td2{
+	width: 75%;
+	padding-left: 2%;
+}
+.inpu_in1{
+	color: #00F;
+	font-size: 18px;
+	padding-left: 30px;
+}
+.inpu_in2{
+	display: none;
+	color: #F0F;
+	font-size: 18px;
+	padding-left: 30px;
+}
+.inpu_in3{
+	display: none;
+	text-align: right;
+	color: #F0F;
+	font-size: 18px;
+	padding-right: 30px;
+}
