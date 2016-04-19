@@ -1,3 +1,4 @@
+@charset "utf-8";
 .video_div{
 	text-align: center;
 	width:100%;
