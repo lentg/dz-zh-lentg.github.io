@@ -1,0 +1,12 @@
+function inpu1(){
+	document.getElementById("in1").style.display="none";
+	document.getElementById("in2").style.display="block";
+	document.getElementById("in2_1").style.display="block";
+	document.getElementById("in3").style.display="block";
+}
+function inpu2(){
+	document.getElementById("in1").style.display="block";
+	document.getElementById("in2").style.display="none";
+	document.getElementById("in2_1").style.display="none"
+	document.getElementById("in3").style.display="none";
+}
